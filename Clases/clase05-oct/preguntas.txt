@@ -1,3 +1,0 @@
-¿Por qué el segundo programa es más rápido que el primero?
-    -Por que el algoritmo accede a ambas matrices por renglones y no por columnas, tal como se almacena en la memoria 
-    de java.
