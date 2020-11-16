@@ -9,7 +9,7 @@ public class ServidorMatricesRMI {
         ClaseMatricesRMI obj = new ClaseMatricesRMI();
     
         // registra la instancia en el rmiregistry
-        Naming.rebind(url + args[0],obj);
+        Naming.rebind(url,obj);
     
     // fin main
     }
