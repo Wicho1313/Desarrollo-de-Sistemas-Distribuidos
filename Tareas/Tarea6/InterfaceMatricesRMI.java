@@ -21,15 +21,6 @@ public interface InterfaceMatricesRMI extends Remote{
      */
     public int[][] parte_matriz(int[][] A, int inicio, int N) throws RemoteException;
 
-    /**Declarado dentro de la Interface.
-     * Permite construir la matriz C a partir de las matrices C1, C2, C3 y C4:
-     * @param C
-     * @param A
-     * @param renglon
-     * @param columna
-     */
-    public int[][] acomoda_matriz(int[][] C, int[][] A, int renglon, int columna, int N) throws RemoteException;
-
     /**
      * Imprime una matriz
      * @param m

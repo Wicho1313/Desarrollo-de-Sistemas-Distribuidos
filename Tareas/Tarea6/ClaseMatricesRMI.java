@@ -34,16 +34,6 @@ public class ClaseMatricesRMI extends UnicastRemoteObject implements InterfaceMa
     
     }
 
-    public int[][] acomoda_matriz(int[][] C,int[][] A, int renglon, int columna, int N) throws RemoteException {
-        
-        for (int i = 0; i < N/2; i++)
-            for (int j = 0; j < N/2; j++)
-                C[i + renglon][j + columna] = A[i][j];
-
-        // imprimir_matriz(C, N, N, "C");
-        return C;
-    }
-
     public void imprimir_matriz(int[][] m, int filas, int columnas, String s) throws RemoteException {
        
         System.out.println("\nImprimiendo " + s);

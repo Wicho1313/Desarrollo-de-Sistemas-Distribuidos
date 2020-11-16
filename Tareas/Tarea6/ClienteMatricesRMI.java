@@ -69,10 +69,10 @@ public class ClienteMatricesRMI {
         r.imprimir_matriz(C3, N/2, N/2, "C3");
         r.imprimir_matriz(C4, N/2, N/2, "C4");
 
-        C= r.acomoda_matriz(C, C1, 0, 0, N);
-        C=r.acomoda_matriz(C, C2, 0, N/2, N);
-        C=r.acomoda_matriz(C, C3, N/2, 0, N);
-        C=r.acomoda_matriz(C, C4, N/2, N/2, N);
+        acomoda_matriz(C, C1, 0, 0);
+        acomoda_matriz(C, C2, 0, N/2);
+        acomoda_matriz(C, C3, N/2, 0);
+        acomoda_matriz(C, C4, N/2, N/2);
         
         if (N == 4){
 
@@ -85,6 +85,17 @@ public class ClienteMatricesRMI {
             System.out.println("checksum = " + r.checksum(C));
         }
     // fin main
+    }
+    /**Método acomoda_matriz.
+     * Permite construir la matriz C a partir de las matrices C1, C2, C3 y C4.
+     * Recibe: Matriz C y Matriz partida A y el renglón y la columna donde inicia.
+     */
+    static void acomoda_matriz (int[][] C,int[][] A, int renglon, int columna) {
+        
+        for (int i = 0; i < N/2; i++)
+            for (int j = 0; j < N/2; j++)
+                C[i + renglon][j + columna] = A[i][j];
+
     }
 // fin clase ClienteMatricesRMI    
 }
