@@ -13,13 +13,5 @@ public interface InterfaceMatricesRMI extends Remote{
      */
     public int[][] multiplica_matrices(int[][] A, int[][] B, int N) throws RemoteException;
     
-    /**Declarado dentro de la Interface.
-     * Método que divide una matriz A dado un renglón inicial.
-     * @param A
-     * @param inicio
-     * @return An[N/2][N]
-     */
-    public int[][] parte_matriz(int[][] A, int inicio, int N) throws RemoteException;
-
 // fin interface
 }

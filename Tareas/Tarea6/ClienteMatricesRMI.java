@@ -48,10 +48,10 @@ public class ClienteMatricesRMI {
         InterfaceMatricesRMI r2 = (InterfaceMatricesRMI)Naming.lookup(url + "2");
         InterfaceMatricesRMI r3 = (InterfaceMatricesRMI)Naming.lookup(url + "3");
 
-        A1 = r0.parte_matriz(A, 0, N);
-        A2 = r1.parte_matriz(A, N/2, N);
-        B1 = r2.parte_matriz(B, 0, N); 
-        B2 = r3.parte_matriz(B, N/2, N);
+        A1 = parte_matriz(A, 0, N);
+        A2 = parte_matriz(A, N/2, N);
+        B1 = parte_matriz(B, 0, N); 
+        B2 = parte_matriz(B, N/2, N);
 
         C1 = r0.multiplica_matrices(A1, B1, N);
         C2 = r1.multiplica_matrices(A1, B2, N);
@@ -122,6 +122,21 @@ public class ClienteMatricesRMI {
                 s += m[i][j];
         return s;
     // fin método checksum    
+    }
+    /**Declarado dentro de la Interface.
+     * Método que divide una matriz A dado un renglón inicial.
+     * @param A
+     * @param inicio
+     * @return An[N/2][N]
+     */
+    static int[][] parte_matriz(int[][] A,int inicio, int N) {
+        
+        int[][] M = new int[N/2][N];
+        for (int i = 0; i < N/2; i++)
+            for (int j = 0; j < N; j++)
+                M[i][j] = A[i + inicio][j];
+        return M;
+    
     }
 // fin clase ClienteMatricesRMI    
 }

@@ -24,16 +24,6 @@ public class ClaseMatricesRMI extends UnicastRemoteObject implements InterfaceMa
         return C;     
     }
 
-    public int[][] parte_matriz(int[][] A,int inicio, int N) throws RemoteException {
-        
-        int[][] M = new int[N/2][N];
-        for (int i = 0; i < N/2; i++)
-            for (int j = 0; j < N; j++)
-                M[i][j] = A[i + inicio][j];
-        return M;
-    
-    }
-
 // fin claseMatricesRMI
 }
 
