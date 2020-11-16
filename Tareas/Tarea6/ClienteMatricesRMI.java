@@ -4,7 +4,7 @@ import java.rmi.Naming;
  * invocar los métodos remotos. */
 public class ClienteMatricesRMI {
     // Tamaño de la matriz
-    static final int N = 4;
+    static final int N = 500;
     // Declaración de matrices originales
     static int[][] A = new int[N][N];
     static int[][] B = new int[N][N];
@@ -44,9 +44,6 @@ public class ClienteMatricesRMI {
         
         // obtiene una referencia que "apunta" al objeto remoto asociado a la URL
         InterfaceMatricesRMI r = (InterfaceMatricesRMI)Naming.lookup(url);
-        //InterfaceMatricesRMI r1 = (InterfaceMatricesRMI)Naming.lookup(url + "1");
-        //InterfaceMatricesRMI r2 = (InterfaceMatricesRMI)Naming.lookup(url + "2");
-        //InterfaceMatricesRMI r3 = (InterfaceMatricesRMI)Naming.lookup(url + "3");
 
         A1 = parte_matriz(A, 0, N);
         A2 = parte_matriz(A, N/2, N);
