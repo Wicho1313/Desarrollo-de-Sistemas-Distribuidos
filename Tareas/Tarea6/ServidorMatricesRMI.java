@@ -3,22 +3,13 @@ import java.rmi.Naming;
 public class ServidorMatricesRMI {
     
     public static void main(String[] args) throws Exception{
-        // url con el puerto 1099 por defecto
+        // url del puerto por defecto
         String url = "rmi://localhost/matrices";
-        // creamos instancia de la clase donde se contiene las definiciones de 
-        // nuestros métodos
+        // instancia del objeto remoto
         ClaseMatricesRMI obj = new ClaseMatricesRMI();
-        
-        if (args.length != 1) {
-            System.err.println("Modo de ejecucion:");
-            System.err.println("java ServidorMatricesRMI <nodo>");
-            System.exit(0);
-        }
-        
-        int nodo = Integer.valueOf(args[0]);
-        
+    
         // registra la instancia en el rmiregistry
-        Naming.rebind(url + nodo, obj);
+        Naming.rebind(url + args[0],obj);
     
     // fin main
     }
