@@ -21,21 +21,5 @@ public interface InterfaceMatricesRMI extends Remote{
      */
     public int[][] parte_matriz(int[][] A, int inicio, int N) throws RemoteException;
 
-    /**
-     * Imprime una matriz
-     * @param m
-     * @param filas
-     * @param columnas
-     * @param s
-     */
-    public void imprimir_matriz(int[][] m, int filas, int columnas, String s) throws RemoteException;
-
-    /**
-     * Calcula el checksum de una matriz
-     * @param m
-     * @return long (checksum)
-     * @throws RemoteException
-     */
-    public long checksum(int[][] m) throws RemoteException;
 // fin interface
 }
