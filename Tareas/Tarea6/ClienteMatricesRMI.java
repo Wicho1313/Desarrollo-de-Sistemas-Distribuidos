@@ -23,7 +23,12 @@ public class ClienteMatricesRMI {
     public static void main(String[] args) throws Exception {
         
         // en este caso el objeto remoto se llama "matrices", notar que se utiliza el puerto default 1099
-        String url = "rmi://localhost/matrices";
+        // se usa la dirección ip privada de cada nodo en el que se ejecuta un servidor en lugar de  "localhost"
+        // en el primer caso, si se utiliza localhost puesto que será el nodo 0
+        String url0 = "rmi://localhost/matrices";
+        String url1 = "rmi://10.0.0.5/matrices";
+        String url2 = "rmi://10.0.0.6/matrices";
+        String url3 = "rmi://10.0.0.7/matrices";
         
         // Inicializando las matrices
         for (int i = 0; i < N; i++){
@@ -43,17 +48,20 @@ public class ClienteMatricesRMI {
         }
         
         // obtiene una referencia que "apunta" al objeto remoto asociado a la URL
-        InterfaceMatricesRMI r = (InterfaceMatricesRMI)Naming.lookup(url);
+        InterfaceMatricesRMI r0 = (InterfaceMatricesRMI)Naming.lookup(url0);
+        InterfaceMatricesRMI r1 = (InterfaceMatricesRMI)Naming.lookup(url1);
+        InterfaceMatricesRMI r2 = (InterfaceMatricesRMI)Naming.lookup(url2);
+        InterfaceMatricesRMI r3 = (InterfaceMatricesRMI)Naming.lookup(url3);
 
         A1 = parte_matriz(A, 0, N);
         A2 = parte_matriz(A, N/2, N);
         B1 = parte_matriz(B, 0, N); 
         B2 = parte_matriz(B, N/2, N);
 
-        C1 = r.multiplica_matrices(A1, B1, N);
-        C2 = r.multiplica_matrices(A1, B2, N);
-        C3 = r.multiplica_matrices(A2, B1, N);
-        C4 = r.multiplica_matrices(A2, B2, N);
+        C1 = r0.multiplica_matrices(A1, B1, N);
+        C2 = r1.multiplica_matrices(A1, B2, N);
+        C3 = r2.multiplica_matrices(A2, B1, N);
+        C4 = r3.multiplica_matrices(A2, B2, N);
 
         acomoda_matriz(C, C1, 0, 0);
         acomoda_matriz(C, C2, 0, N/2);
@@ -120,7 +128,7 @@ public class ClienteMatricesRMI {
         return s;
     // fin método checksum    
     }
-    /**Declarado dentro de la Interface.
+    /**
      * Método que divide una matriz A dado un renglón inicial.
      * @param A
      * @param inicio
