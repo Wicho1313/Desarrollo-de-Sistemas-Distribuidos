@@ -4,7 +4,7 @@ import java.rmi.Naming;
  * invocar los métodos remotos. */
 public class ClienteMatricesRMI {
     // Tamaño de la matriz
-    static final int N = 500;
+    static final int N = 4;
     // Declaración de matrices originales
     static int[][] A = new int[N][N];
     static int[][] B = new int[N][N];
