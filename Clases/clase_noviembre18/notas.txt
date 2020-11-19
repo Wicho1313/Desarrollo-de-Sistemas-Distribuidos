@@ -1,0 +1,41 @@
+6. Compilar y ejecutar el programa.
+    
+    Para compilar el programa EjemploGSON.java se debe ejecutar el siguiente comando:
+
+    javac -cp gson-2.8.6.jar EjemploGSON.java
+
+    Para ejecutar el programa en Windows:
+
+    java -cp gson-2.8.6.jar;. EjemploGSON
+
+    Para ejecutar el programa en Linux:
+
+    java -cp gson-2.8.6.jar:. EjemploGSON
+
+6.1 ¿Qué despliega la serialización?
+
+    Despliega la lista en formato JSON del contenido completo al que hemos instanciado
+    despliega los datos de los empleados (nombre, edad, sueldo, fecha de ingreso y jefe) 
+    si tiene jefe lo pone, si es el su propio jefe, no se despliega en el JSON.
+    
+
+6.2 Al serializar el empleado Hugo ¿Se muestra la auto-referencia que hace el empleado Hugo a sí mismo?
+
+    No se muestra la auto referencia en el formato JSON.
+
+6.3 ¿Hay alguna redundancia en los objetos serializados?
+
+    Si hay redundancia, ya que depliega los datos de un empleado y después los datos de su jefe.
+    Y como estamos describiendo a un empleado con jefe, puede que al jefe no lo hayamos describido,
+    entonces se describe más adelante con la misma información capturada.
+
+6.4 ¿Qué despliega la deserialización?
+
+    Despliega la lista en formato de java (con println) los datos que se encuentran en
+    eL JSON (nombre, edad, sueldo, fecha de ingreso y jefe), si es su propio jefe o no tiene, imprime null. 
+
+6.5 ¿Qué concluye sobre GSON y la forma en que serializa y deserializa las referencias a objetos?
+
+    Es muy fácil de entender y de aplicar para datos no muy grandes, puesto que si se utiliza
+    para una gran cantidad de datos, puede repetir los mismos datos, suponiendo un coste de memoria
+    mayor y posiblemente no considerado antes. 
