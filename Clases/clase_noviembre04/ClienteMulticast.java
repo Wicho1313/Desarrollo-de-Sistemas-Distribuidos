@@ -38,8 +38,9 @@ public class ClienteMulticast{
     byte[] buffer = recibe_mensaje(socket,5*8);
     ByteBuffer b = ByteBuffer.wrap(buffer);
 
-    for (int i = 0; i < 5; i++)
+    for (int i = 0; i < 5; i++){
       System.out.println(b.getDouble());
+    }
 
     socket.leaveGroup(grupo);
     socket.close();

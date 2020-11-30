@@ -23,20 +23,20 @@ public class ClienteMatricesRMI {
     public static void main(String[] args) throws Exception {
         
         // en este caso el objeto remoto se llama "matrices", notar que se utiliza el puerto default 1099
-        String url = "rmi://localhost/matrices";
-
-        // obtiene una referencia que "apunta" al objeto remoto asociado a la URL
-        InterfaceMatricesRMI r = (InterfaceMatricesRMI)Naming.lookup(url);
+        // se usa la dirección ip privada de cada nodo en el que se ejecuta un servidor en lugar de  "localhost"
+        // en el primer caso, si se utiliza localhost puesto que será el nodo 0
+        String url0 = "rmi://localhost/matrices";
+        String url1 = "rmi://10.0.0.5/matrices";
+        String url2 = "rmi://10.0.0.6/matrices";
+        String url3 = "rmi://10.0.0.7/matrices";
         
-        // 1.- Inicializando las matrices
+        // Inicializando las matrices
         for (int i = 0; i < N; i++){
             for (int j = 0; j < N; j++){
                 A[i][j] = 2 * i - j;
                 B[i][j] = 2 * i + j;               
             }
         } 
-        r.imprimir_matriz(A, N, N, "A");
-        r.imprimir_matriz(B, N, N, "B");
         
         // transpone la matriz B, la matriz traspuesta queda en B
         for (int i = 0; i < N; i++){
@@ -46,28 +46,22 @@ public class ClienteMatricesRMI {
                 B[j][i] = t;
             }
         }
-
-        r.imprimir_matriz(B, N, N, "B transpuesta");
         
-        A1 = r.parte_matriz(A, 0, N);
-        A2 = r.parte_matriz(A, N/2, N);
-        B1 = r.parte_matriz(B, 0, N); 
-        B2 = r.parte_matriz(B, N/2, N);
+        // obtiene una referencia que "apunta" al objeto remoto asociado a la URL
+        InterfaceMatricesRMI r0 = (InterfaceMatricesRMI)Naming.lookup(url0);
+        InterfaceMatricesRMI r1 = (InterfaceMatricesRMI)Naming.lookup(url1);
+        InterfaceMatricesRMI r2 = (InterfaceMatricesRMI)Naming.lookup(url2);
+        InterfaceMatricesRMI r3 = (InterfaceMatricesRMI)Naming.lookup(url3);
 
-        r.imprimir_matriz(A1, N/2, N, "A1");
-        r.imprimir_matriz(A2, N/2, N, "A2");
-        r.imprimir_matriz(B1, N/2, N, "B1");
-        r.imprimir_matriz(B2, N/2, N, "B2");
+        A1 = parte_matriz(A, 0, N);
+        A2 = parte_matriz(A, N/2, N);
+        B1 = parte_matriz(B, 0, N); 
+        B2 = parte_matriz(B, N/2, N);
 
-        C1 = r.multiplica_matrices(A1, B1, N);
-        C2 = r.multiplica_matrices(A1, B2, N);
-        C3 = r.multiplica_matrices(A2, B1, N);
-        C4 = r.multiplica_matrices(A2, B2, N);
-
-        r.imprimir_matriz(C1, N/2, N/2, "C1");
-        r.imprimir_matriz(C2, N/2, N/2, "C2");
-        r.imprimir_matriz(C3, N/2, N/2, "C3");
-        r.imprimir_matriz(C4, N/2, N/2, "C4");
+        C1 = r0.multiplica_matrices(A1, B1, N);
+        C2 = r1.multiplica_matrices(A1, B2, N);
+        C3 = r2.multiplica_matrices(A2, B1, N);
+        C4 = r3.multiplica_matrices(A2, B2, N);
 
         acomoda_matriz(C, C1, 0, 0);
         acomoda_matriz(C, C2, 0, N/2);
@@ -76,26 +70,78 @@ public class ClienteMatricesRMI {
         
         if (N == 4){
 
-            r.imprimir_matriz(A, N, N, "A");
-            r.imprimir_matriz(B, N, N, "B transpuesta");
-            r.imprimir_matriz(C, N, N, "C");
-            System.out.println("checksum = " + r.checksum(C));
+            imprimir_matriz(A, N, N, "A");
+            imprimir_matriz(B, N, N, "B transpuesta");
+            imprimir_matriz(C, N, N, "C");
+            System.out.println("checksum = " + checksum(C));
 
         } else {
-            System.out.println("checksum = " + r.checksum(C));
+            System.out.println("checksum = " + checksum(C));
         }
     // fin main
-    }
-    /**Método acomoda_matriz.
+    }    
+    /**Método acomoda_matriz
      * Permite construir la matriz C a partir de las matrices C1, C2, C3 y C4.
-     * Recibe: Matriz C y Matriz partida A y el renglón y la columna donde inicia.
+     * @param C
+     * @param A
+     * @param renglon
+     * @param columna
      */
     static void acomoda_matriz (int[][] C,int[][] A, int renglon, int columna) {
         
         for (int i = 0; i < N/2; i++)
             for (int j = 0; j < N/2; j++)
                 C[i + renglon][j + columna] = A[i][j];
+    // fin método acomoda matriz
+    }
+    /**
+     * Imprime una matriz
+     * @param m
+     * @param filas
+     * @param columnas
+     * @param s
+     * @throws RemoteException
+     */
+    static void imprimir_matriz(int[][] m, int filas, int columnas, String s) {
+       
+        System.out.println("\nImprimiendo " + s);
+        for (int i = 0; i< filas; i++){
+            for (int j = 0; j < columnas; j++){
+                System.out.print(m[i][j] + " ");
+            }
+            System.out.println("");
+        }
+    // fin método imprimir matriz
+    }
 
+    /**
+     * Método que calcula el checksum
+     * @param m
+     * @return long checksum
+     */
+    static long checksum(int[][] m) {
+        
+        long s = 0;
+        for (int i = 0; i < m.length; i++)
+            for (int j = 0; j < m[0].length; j++)
+                s += m[i][j];
+        return s;
+    // fin método checksum    
+    }
+    /**
+     * Método que divide una matriz A dado un renglón inicial.
+     * @param A
+     * @param inicio
+     * @return An[N/2][N]
+     */
+    static int[][] parte_matriz(int[][] A,int inicio, int N) {
+        
+        int[][] M = new int[N/2][N];
+        for (int i = 0; i < N/2; i++)
+            for (int j = 0; j < N; j++)
+                M[i][j] = A[i + inicio][j];
+        return M;
+    
     }
 // fin clase ClienteMatricesRMI    
 }

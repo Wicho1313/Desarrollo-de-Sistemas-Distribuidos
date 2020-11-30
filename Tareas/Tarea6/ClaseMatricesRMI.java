@@ -24,34 +24,6 @@ public class ClaseMatricesRMI extends UnicastRemoteObject implements InterfaceMa
         return C;     
     }
 
-    public int[][] parte_matriz(int[][] A,int inicio, int N) throws RemoteException {
-        
-        int[][] M = new int[N/2][N];
-        for (int i = 0; i < N/2; i++)
-            for (int j = 0; j < N; j++)
-                M[i][j] = A[i + inicio][j];
-        return M;
-    
-    }
-
-    public void imprimir_matriz(int[][] m, int filas, int columnas, String s) throws RemoteException {
-       
-        System.out.println("\nImprimiendo " + s);
-        for (int i = 0; i< filas; i++){
-            for (int j = 0; j < columnas; j++){
-                System.out.print(m[i][j] + " ");
-            }
-            System.out.println("");
-        }
-    }
-    public long checksum(int[][] m) throws RemoteException{
-        
-        long s = 0;
-        for (int i = 0; i < m.length; i++)
-            for (int j = 0; j < m[0].length; j++)
-                s += m[i][j];
-        return s;
-    }
 // fin claseMatricesRMI
 }
 
